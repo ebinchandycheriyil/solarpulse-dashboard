@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
 import { FileText } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { Header } from './Index';
 
 const Reports = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -72,43 +73,46 @@ const Reports = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <h1 className="text-3xl font-bold mb-8">Generate Report</h1>
-      <Card className="bg-gray-800 text-white">
-        <CardHeader>
-          <CardTitle>Select Report Parameters</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex space-x-4">
-            <div>
-              <label className="block mb-2">Start Date</label>
-              <DatePicker date={startDate} setDate={setStartDate} />
+    <div className="min-h-screen bg-gray-900 text-white">
+      <Header />
+      <div className="p-8">
+        <h1 className="text-3xl font-bold mb-8">Generate Report</h1>
+        <Card className="bg-gray-800 text-white">
+          <CardHeader>
+            <CardTitle>Select Report Parameters</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="flex space-x-4">
+              <div>
+                <label className="block mb-2">Start Date</label>
+                <DatePicker date={startDate} setDate={setStartDate} />
+              </div>
+              <div>
+                <label className="block mb-2">End Date</label>
+                <DatePicker date={endDate} setDate={setEndDate} />
+              </div>
             </div>
             <div>
-              <label className="block mb-2">End Date</label>
-              <DatePicker date={endDate} setDate={setEndDate} />
+              <h3 className="text-lg font-semibold mb-2">Select Values to Include</h3>
+              <div className="space-y-2">
+                {Object.entries(selectedValues).map(([key, value]) => (
+                  <div key={key} className="flex items-center">
+                    <Checkbox
+                      id={key}
+                      checked={value}
+                      onCheckedChange={() => handleCheckboxChange(key)}
+                    />
+                    <label htmlFor={key} className="ml-2 capitalize">{key}</label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Select Values to Include</h3>
-            <div className="space-y-2">
-              {Object.entries(selectedValues).map(([key, value]) => (
-                <div key={key} className="flex items-center">
-                  <Checkbox
-                    id={key}
-                    checked={value}
-                    onCheckedChange={() => handleCheckboxChange(key)}
-                  />
-                  <label htmlFor={key} className="ml-2 capitalize">{key}</label>
-                </div>
-              ))}
-            </div>
-          </div>
-          <Button onClick={handleGenerateReport} className="w-full">
-            <FileText className="mr-2 h-4 w-4" /> Generate Report
-          </Button>
-        </CardContent>
-      </Card>
+            <Button onClick={handleGenerateReport} className="w-full">
+              <FileText className="mr-2 h-4 w-4" /> Generate Report
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

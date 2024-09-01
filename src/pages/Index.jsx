@@ -76,7 +76,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
   );
 };
 
-const Header = () => (
+export const Header = () => (
   <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
     <Sheet>
       <SheetTrigger asChild>
@@ -101,7 +101,7 @@ const Header = () => (
         </nav>
       </SheetContent>
     </Sheet>
-    <h1 className="text-2xl font-bold">Zoladyne</h1>
+    <h1 className="text-2xl font-bold">Goose Dashboard</h1>
     <div className="flex items-center space-x-4">
       <Button variant="ghost" size="icon">
         <Bell className="h-6 w-6" />
