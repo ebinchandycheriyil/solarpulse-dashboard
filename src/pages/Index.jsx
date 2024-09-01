@@ -6,6 +6,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 
 const mockData = [
   { time: '00:00', voltage: 12, current: 5, power: 60, boardPower: 40, batteryPercentage: 80 },
@@ -85,18 +86,18 @@ const Header = () => (
       </SheetTrigger>
       <SheetContent side="left">
         <nav className="flex flex-col space-y-4">
-          <a href="#" className="text-lg hover:text-gray-300 flex items-center">
+          <Link to="/" className="text-lg hover:text-gray-300 flex items-center">
             <Activity className="h-5 w-5 mr-2" />
             Dashboard
-          </a>
-          <a href="#" className="text-lg hover:text-gray-300 flex items-center">
+          </Link>
+          <Link to="/reports" className="text-lg hover:text-gray-300 flex items-center">
             <FileText className="h-5 w-5 mr-2" />
             Reports
-          </a>
-          <a href="#" className="text-lg hover:text-gray-300 flex items-center">
+          </Link>
+          <Link to="/trend" className="text-lg hover:text-gray-300 flex items-center">
             <TrendingUp className="h-5 w-5 mr-2" />
             Trend
-          </a>
+          </Link>
         </nav>
       </SheetContent>
     </Sheet>
