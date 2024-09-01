@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
 import { FileText } from 'lucide-react';
+import jsPDF from 'jspdf';
 
 const Reports = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -21,8 +22,53 @@ const Reports = () => {
   };
 
   const handleGenerateReport = () => {
-    // Here you would implement the logic to generate the PDF report
-    console.log('Generating report with:', { startDate, endDate, selectedValues });
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(18);
+    doc.text('Solar Power System Report', 20, 20);
+    
+    // Add date range
+    doc.setFontSize(12);
+    doc.text(`Date Range: ${startDate.toDateString()} - ${endDate.toDateString()}`, 20, 30);
+    
+    // Add selected values
+    doc.setFontSize(14);
+    doc.text('Selected Values:', 20, 40);
+    let yPosition = 50;
+    Object.entries(selectedValues).forEach(([key, value]) => {
+      if (value) {
+        doc.text(`- ${key.charAt(0).toUpperCase() + key.slice(1)}`, 30, yPosition);
+        yPosition += 10;
+      }
+    });
+    
+    // Add sample data (you would replace this with actual data in a real application)
+    doc.setFontSize(14);
+    doc.text('Sample Data:', 20, yPosition + 10);
+    yPosition += 20;
+    if (selectedValues.voltage) {
+      doc.text('Voltage: 12.5V', 30, yPosition);
+      yPosition += 10;
+    }
+    if (selectedValues.current) {
+      doc.text('Current: 5.2A', 30, yPosition);
+      yPosition += 10;
+    }
+    if (selectedValues.power) {
+      doc.text('Power: 65W', 30, yPosition);
+      yPosition += 10;
+    }
+    if (selectedValues.boardPower) {
+      doc.text('Board Power: 45W', 30, yPosition);
+      yPosition += 10;
+    }
+    if (selectedValues.batteryPercentage) {
+      doc.text('Battery Percentage: 85%', 30, yPosition);
+    }
+    
+    // Save the PDF
+    doc.save('solar_power_report.pdf');
   };
 
   return (
