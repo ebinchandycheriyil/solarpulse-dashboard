@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu } from 'lucide-react';
+import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -92,9 +92,14 @@ const Header = () => (
       </SheetContent>
     </Sheet>
     <h1 className="text-2xl font-bold">Zoladyne</h1>
-    <Button variant="ghost" size="icon">
-      <Bell className="h-6 w-6" />
-    </Button>
+    <div className="flex items-center space-x-4">
+      <Button variant="ghost" size="icon">
+        <Bell className="h-6 w-6" />
+      </Button>
+      <Button variant="ghost" size="icon">
+        <User className="h-6 w-6" />
+      </Button>
+    </div>
   </header>
 );
 
