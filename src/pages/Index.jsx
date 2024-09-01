@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User } from 'lucide-react';
+import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User, FileText, TrendingUp } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -85,9 +85,18 @@ const Header = () => (
       </SheetTrigger>
       <SheetContent side="left">
         <nav className="flex flex-col space-y-4">
-          <a href="#" className="text-lg hover:text-gray-300">Dashboard</a>
-          <a href="#" className="text-lg hover:text-gray-300">Settings</a>
-          <a href="#" className="text-lg hover:text-gray-300">Profile</a>
+          <a href="#" className="text-lg hover:text-gray-300 flex items-center">
+            <Activity className="h-5 w-5 mr-2" />
+            Dashboard
+          </a>
+          <a href="#" className="text-lg hover:text-gray-300 flex items-center">
+            <FileText className="h-5 w-5 mr-2" />
+            Reports
+          </a>
+          <a href="#" className="text-lg hover:text-gray-300 flex items-center">
+            <TrendingUp className="h-5 w-5 mr-2" />
+            Trend
+          </a>
         </nav>
       </SheetContent>
     </Sheet>
