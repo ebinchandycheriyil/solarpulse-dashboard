@@ -37,7 +37,7 @@ const Trend = ({ theme, toggleTheme }) => {
       <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="p-8">
         <h2 className="text-3xl font-bold mb-8">Trend Analysis</h2>
-        <Card className="mb-8">
+        <Card className="mb-8 bg-card text-card-foreground">
           <CardHeader>
             <CardTitle>Select Metrics</CardTitle>
           </CardHeader>
@@ -61,7 +61,7 @@ const Trend = ({ theme, toggleTheme }) => {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-card text-card-foreground">
           <CardHeader>
             <CardTitle>Trend Chart</CardTitle>
           </CardHeader>

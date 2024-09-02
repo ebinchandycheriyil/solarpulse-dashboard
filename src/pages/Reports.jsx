@@ -7,7 +7,7 @@ import { FileText } from 'lucide-react';
 import jsPDF from 'jspdf';
 import { Header } from './Index';
 
-const Reports = () => {
+const Reports = ({ theme, toggleTheme }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [selectedValues, setSelectedValues] = useState({
@@ -73,11 +73,11 @@ const Reports = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <Header />
+    <div className="min-h-screen bg-background text-foreground">
+      <Header theme={theme} toggleTheme={toggleTheme} />
       <div className="p-8">
         <h1 className="text-3xl font-bold mb-8">Generate Report</h1>
-        <Card className="bg-gray-800 text-white">
+        <Card className="bg-card text-card-foreground">
           <CardHeader>
             <CardTitle>Select Report Parameters</CardTitle>
           </CardHeader>
