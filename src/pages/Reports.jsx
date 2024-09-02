@@ -75,19 +75,19 @@ const Reports = ({ theme, toggleTheme }) => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header theme={theme} toggleTheme={toggleTheme} />
-      <div className="p-8">
+      <div className="p-4 sm:p-8">
         <h1 className="text-3xl font-bold mb-8">Generate Report</h1>
         <Card className="bg-card text-card-foreground">
           <CardHeader>
             <CardTitle>Select Report Parameters</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="flex space-x-4">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+              <div className="w-full sm:w-1/2">
                 <label className="block mb-2">Start Date</label>
                 <DatePicker date={startDate} setDate={setStartDate} />
               </div>
-              <div>
+              <div className="w-full sm:w-1/2">
                 <label className="block mb-2">End Date</label>
                 <DatePicker date={endDate} setDate={setEndDate} />
               </div>
