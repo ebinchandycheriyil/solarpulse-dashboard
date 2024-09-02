@@ -78,7 +78,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
 };
 
 export const Header = ({ theme, toggleTheme }) => (
-  <header className="bg-background text-foreground p-4">
+  <header className="bg-background text-foreground p-4 sticky top-0 z-10 shadow-md">
     <div className="flex justify-between items-center mb-4">
       <Sheet>
         <SheetTrigger asChild>
