@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User, FileText, TrendingUp } from 'lucide-react';
+import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User, FileText, TrendingUp, Sun, Moon } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
+import { Switch } from "@/components/ui/switch";
 
 const mockData = [
   { time: '00:00', voltage: 12, current: 5, power: 60, boardPower: 40, batteryPercentage: 80 },
@@ -24,7 +25,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
     <motion.div
       layout
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className={`bg-gray-800 text-white rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
+      className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
     >
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="w-full">
@@ -76,47 +77,54 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
   );
 };
 
-export const Header = () => (
-  <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
-    <Sheet>
-      <SheetTrigger asChild>
+export const Header = ({ theme, toggleTheme }) => (
+  <header className="bg-background text-foreground p-4">
+    <div className="flex justify-between items-center mb-4">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <Menu className="h-6 w-6" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <nav className="flex flex-col space-y-4">
+            <Link to="/" className="text-lg hover:text-muted-foreground flex items-center">
+              <Activity className="h-5 w-5 mr-2" />
+              Dashboard
+            </Link>
+            <Link to="/reports" className="text-lg hover:text-muted-foreground flex items-center">
+              <FileText className="h-5 w-5 mr-2" />
+              Reports
+            </Link>
+            <Link to="/trend" className="text-lg hover:text-muted-foreground flex items-center">
+              <TrendingUp className="h-5 w-5 mr-2" />
+              Trend
+            </Link>
+          </nav>
+        </SheetContent>
+      </Sheet>
+      <h1 className="text-2xl font-bold">Goose Dashboard</h1>
+      <div className="flex items-center space-x-4">
         <Button variant="ghost" size="icon">
-          <Menu className="h-6 w-6" />
+          <Bell className="h-6 w-6" />
         </Button>
-      </SheetTrigger>
-      <SheetContent side="left">
-        <nav className="flex flex-col space-y-4">
-          <Link to="/" className="text-lg hover:text-gray-300 flex items-center">
-            <Activity className="h-5 w-5 mr-2" />
-            Dashboard
-          </Link>
-          <Link to="/reports" className="text-lg hover:text-gray-300 flex items-center">
-            <FileText className="h-5 w-5 mr-2" />
-            Reports
-          </Link>
-          <Link to="/trend" className="text-lg hover:text-gray-300 flex items-center">
-            <TrendingUp className="h-5 w-5 mr-2" />
-            Trend
-          </Link>
-        </nav>
-      </SheetContent>
-    </Sheet>
-    <h1 className="text-2xl font-bold">Goose Dashboard</h1>
-    <div className="flex items-center space-x-4">
-      <Button variant="ghost" size="icon">
-        <Bell className="h-6 w-6" />
-      </Button>
-      <Button variant="ghost" size="icon">
-        <User className="h-6 w-6" />
-      </Button>
+        <Button variant="ghost" size="icon">
+          <User className="h-6 w-6" />
+        </Button>
+      </div>
+    </div>
+    <div className="flex items-center justify-start space-x-2 pl-4">
+      <Sun className="h-4 w-4" />
+      <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
+      <Moon className="h-4 w-4" />
     </div>
   </header>
 );
 
-const Index = () => {
+const Index = ({ theme, toggleTheme }) => {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <Header />
+    <div className={`min-h-screen bg-background text-foreground`}>
+      <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="p-8">
         <h2 className="text-3xl font-bold mb-8">Solar Power Dashboard</h2>
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
