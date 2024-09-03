@@ -37,14 +37,6 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
             <CardContent>
               <div className="text-2xl font-bold">{value}{unit}</div>
             </CardContent>
-            <motion.div
-              className="absolute bottom-2 left-2"
-              initial={false}
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ChevronDown className="h-4 w-4" />
-            </motion.div>
           </Card>
         </CollapsibleTrigger>
         <AnimatePresence>
@@ -71,6 +63,14 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
             </CollapsibleContent>
           )}
         </AnimatePresence>
+        <motion.div
+          className="absolute bottom-2 left-2"
+          initial={false}
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ChevronDown className="h-4 w-4" />
+        </motion.div>
       </Collapsible>
     </motion.div>
   );
