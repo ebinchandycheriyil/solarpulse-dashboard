@@ -24,7 +24,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
   return (
     <motion.div
       layout
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
       className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
     >
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -49,7 +49,13 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="p-4">
+              <motion.div
+                initial={{ y: -50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -50, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="p-4"
+              >
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={mockData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#444" />
@@ -59,7 +65,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
                     <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
                   </LineChart>
                 </ResponsiveContainer>
-              </div>
+              </motion.div>
             </CollapsibleContent>
           )}
         </AnimatePresence>
@@ -129,13 +135,13 @@ const Index = ({ theme, toggleTheme }) => {
       <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="p-8">
         <h2 className="text-3xl font-bold mb-8">Solar Power Dashboard</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <MetricCard title="Voltage" value={mockData[mockData.length - 1].voltage} unit="V" icon={Zap} dataKey="voltage" stroke="#ffd700" />
           <MetricCard title="Current" value={mockData[mockData.length - 1].current} unit="A" icon={Activity} dataKey="current" stroke="#00ff00" />
           <MetricCard title="Power" value={mockData[mockData.length - 1].power} unit="W" icon={Gauge} dataKey="power" stroke="#ff4500" />
           <MetricCard title="Board Power" value={mockData[mockData.length - 1].boardPower} unit="W" icon={Zap} dataKey="boardPower" stroke="#1e90ff" />
           <MetricCard title="Battery" value={mockData[mockData.length - 1].batteryPercentage} unit="%" icon={Battery} dataKey="batteryPercentage" stroke="#8a2be2" />
-        </div>
+        </motion.div>
       </main>
     </div>
   );
