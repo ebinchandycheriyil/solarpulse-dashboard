@@ -86,8 +86,8 @@ export const Header = ({ theme, toggleTheme }) => (
             <Menu className="h-6 w-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left">
-          <nav className="flex flex-col space-y-4">
+        <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col">
+          <nav className="flex flex-col space-y-4 flex-grow">
             <Link to="/" className="text-lg hover:text-muted-foreground flex items-center">
               <Activity className="h-5 w-5 mr-2" />
               Dashboard
@@ -101,6 +101,14 @@ export const Header = ({ theme, toggleTheme }) => (
               Trend
             </Link>
           </nav>
+          <div className="flex items-center justify-between mt-auto pt-4 border-t">
+            <span className="flex items-center space-x-2">
+              <Sun className="h-4 w-4" />
+              <span>Dark Mode</span>
+              <Moon className="h-4 w-4" />
+            </span>
+            <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
+          </div>
         </SheetContent>
       </Sheet>
       <h1 className="text-2xl font-bold">Goose Dashboard</h1>
@@ -112,11 +120,6 @@ export const Header = ({ theme, toggleTheme }) => (
           <User className="h-6 w-6" />
         </Button>
       </div>
-    </div>
-    <div className="flex items-center justify-start space-x-2 pl-4">
-      <Sun className="h-4 w-4" />
-      <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
-      <Moon className="h-4 w-4" />
     </div>
   </header>
 );
