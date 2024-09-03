@@ -30,41 +30,40 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger className="w-full">
           <Card className="bg-transparent border-none relative">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{title}</CardTitle>
-              <Icon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{value}{unit}</div>
-            </CardContent>
+            <div className="h-24"> {/* Fixed height container */}
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                <Icon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{value}{unit}</div>
+              </CardContent>
+            </div>
           </Card>
         </CollapsibleTrigger>
         <AnimatePresence>
           {isOpen && (
             <CollapsibleContent
               forceMount
-              as={motion.div}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
             >
               <motion.div
-                initial={{ y: -300, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -300, opacity: 0 }}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="p-4 bg-card"
+                className="overflow-hidden"
               >
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={mockData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                    <XAxis dataKey="time" stroke="#888" />
-                    <YAxis stroke="#888" />
-                    <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                    <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
-                  </LineChart>
-                </ResponsiveContainer>
+                <div className="p-4 bg-card">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={mockData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                      <XAxis dataKey="time" stroke="#888" />
+                      <YAxis stroke="#888" />
+                      <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                      <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </motion.div>
             </CollapsibleContent>
           )}
