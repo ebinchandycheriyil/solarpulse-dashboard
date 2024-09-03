@@ -64,7 +64,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
           )}
         </AnimatePresence>
         <motion.div
-          className="absolute bottom-2 left-2"
+          className="absolute bottom-2 right-2"
           initial={false}
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
@@ -129,13 +129,13 @@ const Index = ({ theme, toggleTheme }) => {
       <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="p-8">
         <h2 className="text-3xl font-bold mb-8">Solar Power Dashboard</h2>
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <MetricCard title="Voltage" value={mockData[mockData.length - 1].voltage} unit="V" icon={Zap} dataKey="voltage" stroke="#ffd700" />
           <MetricCard title="Current" value={mockData[mockData.length - 1].current} unit="A" icon={Activity} dataKey="current" stroke="#00ff00" />
           <MetricCard title="Power" value={mockData[mockData.length - 1].power} unit="W" icon={Gauge} dataKey="power" stroke="#ff4500" />
           <MetricCard title="Board Power" value={mockData[mockData.length - 1].boardPower} unit="W" icon={Zap} dataKey="boardPower" stroke="#1e90ff" />
           <MetricCard title="Battery" value={mockData[mockData.length - 1].batteryPercentage} unit="%" icon={Battery} dataKey="batteryPercentage" stroke="#8a2be2" />
-        </motion.div>
+        </div>
       </main>
     </div>
   );
