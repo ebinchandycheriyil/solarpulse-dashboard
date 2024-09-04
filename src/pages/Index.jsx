@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { Switch } from "@/components/ui/switch";
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const mockData = [
   { time: '00:00', voltage: 12, current: 5, power: 60, boardPower: 40, batteryPercentage: 80 },
@@ -18,73 +19,80 @@ const mockData = [
   { time: '20:00', voltage: 12.5, current: 5.5, power: 68.75, boardPower: 45, batteryPercentage: 85 },
 ];
 
-const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
+const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.div
-      layout
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
-    >
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="w-full">
-          <Card className="bg-transparent border-none relative">
-            <div className="h-24 relative">
-              <motion.div
-                layout
-                className="absolute inset-0 flex flex-col justify-between p-4"
-              >
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                  <div className="flex items-center">
-                    <motion.div
-                      className="mr-2"
-                      initial={false}
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown className="h-4 w-4" />
-                    </motion.div>
-                    <CardTitle className="text-sm font-medium">{title}</CardTitle>
-                  </div>
-                  <Icon className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="text-2xl font-bold">{value}{unit}</div>
-                </CardContent>
-              </motion.div>
-            </div>
-          </Card>
-        </CollapsibleTrigger>
-        <AnimatePresence>
-          {isOpen && (
-            <CollapsibleContent
-              forceMount
-            >
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="p-4 bg-card">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={mockData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                      <XAxis dataKey="time" stroke="#888" />
-                      <YAxis stroke="#888" />
-                      <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                      <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
+    <Draggable draggableId={title} index={index}>
+      {(provided) => (
+        <motion.div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          layout
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
+        >
+          <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+            <CollapsibleTrigger className="w-full">
+              <Card className="bg-transparent border-none relative">
+                <div className="h-24 relative">
+                  <motion.div
+                    layout
+                    className="absolute inset-0 flex flex-col justify-between p-4"
+                  >
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                      <div className="flex items-center">
+                        <motion.div
+                          className="mr-2"
+                          initial={false}
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <ChevronDown className="h-4 w-4" />
+                        </motion.div>
+                        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                      </div>
+                      <Icon className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <div className="text-2xl font-bold">{value}{unit}</div>
+                    </CardContent>
+                  </motion.div>
                 </div>
-              </motion.div>
-            </CollapsibleContent>
-          )}
-        </AnimatePresence>
-      </Collapsible>
-    </motion.div>
+              </Card>
+            </CollapsibleTrigger>
+            <AnimatePresence>
+              {isOpen && (
+                <CollapsibleContent
+                  forceMount
+                >
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-4 bg-card">
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={mockData}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                          <XAxis dataKey="time" stroke="#888" />
+                          <YAxis stroke="#888" />
+                          <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                          <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </motion.div>
+                </CollapsibleContent>
+              )}
+            </AnimatePresence>
+          </Collapsible>
+        </motion.div>
+      )}
+    </Draggable>
   );
 };
 
@@ -136,18 +144,48 @@ export const Header = ({ theme, toggleTheme }) => (
 );
 
 const Index = ({ theme, toggleTheme }) => {
+  const [metrics, setMetrics] = useState([
+    { title: "Voltage", value: mockData[mockData.length - 1].voltage, unit: "V", icon: Zap, dataKey: "voltage", stroke: "#ffd700" },
+    { title: "Current", value: mockData[mockData.length - 1].current, unit: "A", icon: Activity, dataKey: "current", stroke: "#00ff00" },
+    { title: "Power", value: mockData[mockData.length - 1].power, unit: "W", icon: Gauge, dataKey: "power", stroke: "#ff4500" },
+    { title: "Board Power", value: mockData[mockData.length - 1].boardPower, unit: "W", icon: Zap, dataKey: "boardPower", stroke: "#1e90ff" },
+    { title: "Battery", value: mockData[mockData.length - 1].batteryPercentage, unit: "%", icon: Battery, dataKey: "batteryPercentage", stroke: "#8a2be2" },
+  ]);
+
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = Array.from(metrics);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setMetrics(items);
+  };
+
   return (
     <div className={`min-h-screen bg-background text-foreground`}>
       <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="p-8">
         <h2 className="text-3xl font-bold mb-8">Solar Power Dashboard</h2>
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <MetricCard title="Voltage" value={mockData[mockData.length - 1].voltage} unit="V" icon={Zap} dataKey="voltage" stroke="#ffd700" />
-          <MetricCard title="Current" value={mockData[mockData.length - 1].current} unit="A" icon={Activity} dataKey="current" stroke="#00ff00" />
-          <MetricCard title="Power" value={mockData[mockData.length - 1].power} unit="W" icon={Gauge} dataKey="power" stroke="#ff4500" />
-          <MetricCard title="Board Power" value={mockData[mockData.length - 1].boardPower} unit="W" icon={Zap} dataKey="boardPower" stroke="#1e90ff" />
-          <MetricCard title="Battery" value={mockData[mockData.length - 1].batteryPercentage} unit="%" icon={Battery} dataKey="batteryPercentage" stroke="#8a2be2" />
-        </motion.div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="metrics">
+            {(provided) => (
+              <motion.div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                layout
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              >
+                {metrics.map((metric, index) => (
+                  <MetricCard key={metric.title} {...metric} index={index} />
+                ))}
+                {provided.placeholder}
+              </motion.div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </main>
     </div>
   );
