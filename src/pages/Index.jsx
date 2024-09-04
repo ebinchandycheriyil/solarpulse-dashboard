@@ -35,7 +35,11 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger className="w-full" {...provided.dragHandleProps}>
               <Card className="bg-transparent border-none relative">
-                <div className="h-24 relative">
+                <motion.div
+                  layout
+                  className="h-24 relative"
+                  style={{ originX: 0, originY: 0 }}
+                >
                   <motion.div
                     layout
                     className="absolute inset-0 flex flex-col justify-between p-4"
@@ -58,13 +62,12 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                       <motion.div
                         layout
                         className="text-2xl font-bold"
-                        style={{ originX: 0, originY: 0 }}
                       >
                         {value}{unit}
                       </motion.div>
                     </CardContent>
                   </motion.div>
-                </div>
+                </motion.div>
               </Card>
             </CollapsibleTrigger>
             <AnimatePresence>
