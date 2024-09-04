@@ -55,7 +55,13 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                       <Icon className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="text-2xl font-bold">{value}{unit}</div>
+                      <motion.div
+                        layout
+                        className="text-2xl font-bold"
+                        style={{ originX: 0, originY: 0 }}
+                      >
+                        {value}{unit}
+                      </motion.div>
                     </CardContent>
                   </motion.div>
                 </div>
@@ -179,7 +185,17 @@ const Index = ({ theme, toggleTheme }) => {
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
                 >
                   {metrics.map((metric, index) => (
-                    <MetricCard key={metric.title} {...metric} index={index} />
+                    <motion.div
+                      key={metric.title}
+                      layout
+                      transition={{
+                        type: "spring",
+                        damping: 20,
+                        stiffness: 100
+                      }}
+                    >
+                      <MetricCard {...metric} index={index} />
+                    </motion.div>
                   ))}
                   {provided.placeholder}
                 </motion.div>
