@@ -30,7 +30,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
           ref={provided.innerRef}
           layout
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
+          className={`bg-card text-card-foreground rounded-lg overflow-hidden w-full ${isOpen ? 'col-span-full' : ''}`}
         >
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger className="w-full" {...provided.dragHandleProps}>
@@ -191,7 +191,7 @@ const Index = ({ theme, toggleTheme }) => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                   layout
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
                   {metrics.map((metric, index) => (
                     <motion.div
