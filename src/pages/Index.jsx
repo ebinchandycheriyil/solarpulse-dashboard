@@ -30,19 +30,15 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
           ref={provided.innerRef}
           layout
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={`bg-card text-card-foreground rounded-lg overflow-hidden w-full ${isOpen ? 'col-span-full' : ''}`}
+          className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
         >
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger className="w-full" {...provided.dragHandleProps}>
               <Card className="bg-transparent border-none relative">
-                <motion.div
-                  layout
-                  className="relative"
-                  style={{ originX: 0, originY: 0 }}
-                >
+                <div className="h-24 relative">
                   <motion.div
                     layout
-                    className="flex flex-col justify-between p-4"
+                    className="absolute inset-0 flex flex-col justify-between p-4"
                   >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                       <div className="flex items-center">
@@ -58,16 +54,17 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                       </div>
                       <Icon className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
-                    <CardContent className="p-0 mt-2">
+                    <CardContent className="p-0">
                       <motion.div
                         layout
                         className="text-2xl font-bold"
+                        style={{ originX: 0, originY: 0 }}
                       >
                         {value}{unit}
                       </motion.div>
                     </CardContent>
                   </motion.div>
-                </motion.div>
+                </div>
               </Card>
             </CollapsibleTrigger>
             <AnimatePresence>
@@ -83,21 +80,15 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                     className="overflow-hidden"
                   >
                     <div className="p-4 bg-card">
-                      <motion.div
-                        initial={{ scale: 0.9 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <ResponsiveContainer width="100%" height={300}>
-                          <LineChart data={mockData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                            <XAxis dataKey="time" stroke="#888" />
-                            <YAxis stroke="#888" />
-                            <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                            <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
-                          </LineChart>
-                        </ResponsiveContainer>
-                      </motion.div>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={mockData}>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                          <XAxis dataKey="time" stroke="#888" />
+                          <YAxis stroke="#888" />
+                          <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                          <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
+                        </LineChart>
+                      </ResponsiveContainer>
                     </div>
                   </motion.div>
                 </CollapsibleContent>
@@ -191,7 +182,7 @@ const Index = ({ theme, toggleTheme }) => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                   layout
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
                 >
                   {metrics.map((metric, index) => (
                     <motion.div
@@ -202,7 +193,6 @@ const Index = ({ theme, toggleTheme }) => {
                         damping: 20,
                         stiffness: 100
                       }}
-                      className="w-full"
                     >
                       <MetricCard {...metric} index={index} />
                     </motion.div>
