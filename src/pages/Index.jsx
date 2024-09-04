@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User, FileText, TrendingUp, Sun, Moon } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -27,14 +27,13 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
       {(provided) => (
         <motion.div
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
           layout
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
         >
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger className="w-full">
+            <CollapsibleTrigger className="w-full" {...provided.dragHandleProps}>
               <Card className="bg-transparent border-none relative">
                 <div className="h-24 relative">
                   <motion.div
@@ -172,17 +171,19 @@ const Index = ({ theme, toggleTheme }) => {
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="metrics">
             {(provided) => (
-              <motion.div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                layout
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-              >
-                {metrics.map((metric, index) => (
-                  <MetricCard key={metric.title} {...metric} index={index} />
-                ))}
-                {provided.placeholder}
-              </motion.div>
+              <LayoutGroup>
+                <motion.div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  layout
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                >
+                  {metrics.map((metric, index) => (
+                    <MetricCard key={metric.title} {...metric} index={index} />
+                  ))}
+                  {provided.placeholder}
+                </motion.div>
+              </LayoutGroup>
             )}
           </Droppable>
         </DragDropContext>
