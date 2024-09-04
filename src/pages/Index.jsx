@@ -36,20 +36,22 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
                 className="absolute inset-0 flex flex-col justify-between p-4"
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                  <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                  <div className="flex items-center">
+                    <motion.div
+                      className="mr-2"
+                      initial={false}
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </motion.div>
+                    <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                  </div>
                   <Icon className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="p-0">
                   <div className="text-2xl font-bold">{value}{unit}</div>
                 </CardContent>
-                <motion.div
-                  className="absolute bottom-2 right-2"
-                  initial={false}
-                  animate={{ rotate: isOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ChevronDown className="h-4 w-4" />
-                </motion.div>
               </motion.div>
             </div>
           </Card>
@@ -139,7 +141,7 @@ const Index = ({ theme, toggleTheme }) => {
       <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="p-8">
         <h2 className="text-3xl font-bold mb-8">Solar Power Dashboard</h2>
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard title="Voltage" value={mockData[mockData.length - 1].voltage} unit="V" icon={Zap} dataKey="voltage" stroke="#ffd700" />
           <MetricCard title="Current" value={mockData[mockData.length - 1].current} unit="A" icon={Activity} dataKey="current" stroke="#00ff00" />
           <MetricCard title="Power" value={mockData[mockData.length - 1].power} unit="W" icon={Gauge} dataKey="power" stroke="#ff4500" />
