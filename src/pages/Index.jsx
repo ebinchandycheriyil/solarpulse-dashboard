@@ -31,20 +31,25 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke }) => {
         <CollapsibleTrigger className="w-full">
           <Card className="bg-transparent border-none relative">
             <div className="h-24 relative">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">{title}</CardTitle>
-                <Icon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{value}{unit}</div>
-              </CardContent>
               <motion.div
-                className="absolute bottom-2 left-2"
-                initial={false}
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+                layout
+                className="absolute inset-0 flex flex-col justify-between p-4"
               >
-                <ChevronDown className="h-4 w-4" />
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
+                  <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                  <Icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="text-2xl font-bold">{value}{unit}</div>
+                </CardContent>
+                <motion.div
+                  className="absolute bottom-2 right-2"
+                  initial={false}
+                  animate={{ rotate: isOpen ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </motion.div>
               </motion.div>
             </div>
           </Card>
