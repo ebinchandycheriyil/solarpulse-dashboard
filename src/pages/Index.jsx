@@ -37,12 +37,12 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
               <Card className="bg-transparent border-none relative">
                 <motion.div
                   layout
-                  className="h-24 relative"
+                  className="relative"
                   style={{ originX: 0, originY: 0 }}
                 >
                   <motion.div
                     layout
-                    className="absolute inset-0 flex flex-col justify-between p-4"
+                    className="flex flex-col justify-between p-4"
                   >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                       <div className="flex items-center">
@@ -58,7 +58,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                       </div>
                       <Icon className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
-                    <CardContent className="p-0">
+                    <CardContent className="p-0 mt-2">
                       <motion.div
                         layout
                         className="text-2xl font-bold"
@@ -83,15 +83,21 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                     className="overflow-hidden"
                   >
                     <div className="p-4 bg-card">
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={mockData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                          <XAxis dataKey="time" stroke="#888" />
-                          <YAxis stroke="#888" />
-                          <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                          <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
-                        </LineChart>
-                      </ResponsiveContainer>
+                      <motion.div
+                        initial={{ scale: 0.9 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <ResponsiveContainer width="100%" height={300}>
+                          <LineChart data={mockData}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                            <XAxis dataKey="time" stroke="#888" />
+                            <YAxis stroke="#888" />
+                            <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                            <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </motion.div>
                     </div>
                   </motion.div>
                 </CollapsibleContent>
@@ -196,6 +202,7 @@ const Index = ({ theme, toggleTheme }) => {
                         damping: 20,
                         stiffness: 100
                       }}
+                      className="w-full"
                     >
                       <MetricCard {...metric} index={index} />
                     </motion.div>
