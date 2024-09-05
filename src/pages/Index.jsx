@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Battery, Zap, Activity, Gauge } from 'lucide-react';
 import { motion, LayoutGroup } from 'framer-motion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Header } from './Header';
+import { Header } from '@/components/Header';
 import MetricCard from '@/components/MetricCard';
 
 const mockData = [
