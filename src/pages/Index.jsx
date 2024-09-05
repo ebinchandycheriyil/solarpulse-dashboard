@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Battery, Zap, Activity, Gauge, ChevronDown, Bell, Menu, User, FileText, TrendingUp, Sun, Moon } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
-import { Switch } from "@/components/ui/switch";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Battery, Zap, Activity, Gauge } from 'lucide-react';
+import { motion, LayoutGroup } from 'framer-motion';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { Header } from './Header';
+import MetricCard from '@/components/MetricCard';
 
 const mockData = [
   { time: '00:00', voltage: 12, current: 5, power: 60, boardPower: 40, batteryPercentage: 80 },
@@ -18,136 +13,6 @@ const mockData = [
   { time: '16:00', voltage: 13, current: 6, power: 78, boardPower: 50, batteryPercentage: 90 },
   { time: '20:00', voltage: 12.5, current: 5.5, power: 68.75, boardPower: 45, batteryPercentage: 85 },
 ];
-
-const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <Draggable draggableId={title} index={index}>
-      {(provided) => (
-        <motion.div
-          {...provided.draggableProps}
-          ref={provided.innerRef}
-          layout
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : 'col-span-1'}`}
-          style={{
-            width: isOpen ? '100%' : 'auto',
-            transition: 'width 0.3s ease-in-out',
-          }}
-        >
-          <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <CollapsibleTrigger className="w-full" {...provided.dragHandleProps}>
-              <Card className="bg-transparent border-none relative">
-                <div className="h-24 relative">
-                  <motion.div
-                    layout
-                    className="absolute inset-0 flex flex-col justify-between p-4"
-                    style={{
-                      transition: 'all 0.3s ease-in-out',
-                    }}
-                  >
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
-                      <div className="flex items-center">
-                        <motion.div
-                          className="mr-2"
-                          initial={false}
-                          animate={{ rotate: isOpen ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <ChevronDown className="h-4 w-4" />
-                        </motion.div>
-                        <CardTitle className="text-sm font-medium" style={{ transition: 'transform 0.3s ease-in-out' }}>{title}</CardTitle>
-                      </div>
-                      <Icon className="h-4 w-4 text-muted-foreground" style={{ transition: 'transform 0.3s ease-in-out' }} />
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="text-2xl font-bold" style={{ transition: 'transform 0.3s ease-in-out' }}>{value}{unit}</div>
-                    </CardContent>
-                  </motion.div>
-                </div>
-              </Card>
-            </CollapsibleTrigger>
-            <AnimatePresence>
-              {isOpen && (
-                <CollapsibleContent
-                  forceMount
-                >
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-4 bg-card">
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={mockData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                          <XAxis dataKey="time" stroke="#888" />
-                          <YAxis stroke="#888" />
-                          <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                          <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </motion.div>
-                </CollapsibleContent>
-              )}
-            </AnimatePresence>
-          </Collapsible>
-        </motion.div>
-      )}
-    </Draggable>
-  );
-};
-
-export const Header = ({ theme, toggleTheme }) => (
-  <header className="bg-background text-foreground p-4 sticky top-0 z-10 shadow-md">
-    <div className="flex justify-between items-center mb-4">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <Menu className="h-6 w-6" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col">
-          <nav className="flex flex-col space-y-4 flex-grow">
-            <Link to="/" className="text-lg hover:text-muted-foreground flex items-center">
-              <Activity className="h-5 w-5 mr-2" />
-              Dashboard
-            </Link>
-            <Link to="/reports" className="text-lg hover:text-muted-foreground flex items-center">
-              <FileText className="h-5 w-5 mr-2" />
-              Reports
-            </Link>
-            <Link to="/trend" className="text-lg hover:text-muted-foreground flex items-center">
-              <TrendingUp className="h-5 w-5 mr-2" />
-              Trend
-            </Link>
-          </nav>
-          <div className="flex items-center justify-between mt-auto pt-4 border-t">
-            <span className="flex items-center space-x-2">
-              <Sun className="h-4 w-4" />
-              <span>Dark Mode</span>
-              <Moon className="h-4 w-4" />
-            </span>
-            <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
-          </div>
-        </SheetContent>
-      </Sheet>
-      <h1 className="text-2xl font-bold">Goose Dashboard</h1>
-      <div className="flex items-center space-x-4">
-        <Button variant="ghost" size="icon">
-          <Bell className="h-6 w-6" />
-        </Button>
-        <Button variant="ghost" size="icon">
-          <User className="h-6 w-6" />
-        </Button>
-      </div>
-    </div>
-  </header>
-);
 
 const Index = ({ theme, toggleTheme }) => {
   const [metrics, setMetrics] = useState([
@@ -159,14 +24,10 @@ const Index = ({ theme, toggleTheme }) => {
   ]);
 
   const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
+    if (!result.destination) return;
     const items = Array.from(metrics);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
     setMetrics(items);
   };
 
@@ -184,9 +45,12 @@ const Index = ({ theme, toggleTheme }) => {
                   ref={provided.innerRef}
                   layout
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                  style={{
+                    '--card-bg-color': theme === 'dark' ? '#FFFF00' : '#00FF00',
+                  }}
                 >
                   {metrics.map((metric, index) => (
-                    <MetricCard key={metric.title} {...metric} index={index} />
+                    <MetricCard key={metric.title} {...metric} index={index} mockData={mockData} />
                   ))}
                   {provided.placeholder}
                 </motion.div>
