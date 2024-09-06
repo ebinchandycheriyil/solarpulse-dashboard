@@ -36,10 +36,14 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
                     </motion.div>
                     <CardTitle className="text-sm font-medium">{title}</CardTitle>
                   </div>
-                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <motion.div layout="position">
+                    <Icon className="h-4 w-4 text-muted-foreground" />
+                  </motion.div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-2xl font-bold">{value}{unit}</div>
+                  <motion.div layout="position" className="text-2xl font-bold">
+                    {value}{unit}
+                  </motion.div>
                 </CardContent>
               </motion.div>
             </div>
