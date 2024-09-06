@@ -25,7 +25,6 @@ const useExpandedState = (initialState) => {
 
 const Index = ({ theme, toggleTheme }) => {
   const [expandedIndex, toggleExpanded] = useExpandedState(-1);
-  const animationDuration = 3; // 3 seconds
 
   const metrics = [
     { title: "Voltage", value: mockData[mockData.length - 1].voltage, unit: "V", icon: Zap, dataKey: "voltage", stroke: "#ffd700" },
@@ -50,7 +49,6 @@ const Index = ({ theme, toggleTheme }) => {
                 index={index}
                 isExpanded={expandedIndex === index}
                 onToggle={() => toggleExpanded(index)}
-                animationDuration={animationDuration}
               />
             ))}
           </motion.div>
