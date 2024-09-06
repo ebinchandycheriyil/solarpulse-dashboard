@@ -9,7 +9,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
   return (
     <motion.div
       layout
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: 0.15, ease: "easeInOut" }}
       className={`bg-card text-card-foreground rounded-lg overflow-hidden`}
       style={{
         gridColumn: isExpanded ? '1 / -1' : 'auto',
@@ -30,7 +30,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
                       className="mr-2"
                       initial={false}
                       animate={{ rotate: isExpanded ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.15 }}
                     >
                       <ChevronDown className="h-4 w-4" />
                     </motion.div>
@@ -54,7 +54,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.15 }}
             className="overflow-hidden"
           >
             <div className="p-4 bg-card">
