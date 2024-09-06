@@ -30,7 +30,11 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
           ref={provided.innerRef}
           layout
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : ''}`}
+          className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : 'col-span-1'}`}
+          style={{
+            width: isOpen ? '100%' : 'auto',
+            transition: 'width 0.3s ease-in-out',
+          }}
         >
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger className="w-full" {...provided.dragHandleProps}>
@@ -39,6 +43,9 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                   <motion.div
                     layout
                     className="absolute inset-0 flex flex-col justify-between p-4"
+                    style={{
+                      transition: 'all 0.3s ease-in-out',
+                    }}
                   >
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                       <div className="flex items-center">
@@ -50,12 +57,12 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, index }) 
                         >
                           <ChevronDown className="h-4 w-4" />
                         </motion.div>
-                        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+                        <CardTitle className="text-sm font-medium" style={{ transition: 'transform 0.3s ease-in-out' }}>{title}</CardTitle>
                       </div>
-                      <Icon className="h-4 w-4 text-muted-foreground" />
+                      <Icon className="h-4 w-4 text-muted-foreground" style={{ transition: 'transform 0.3s ease-in-out' }} />
                     </CardHeader>
                     <CardContent className="p-0">
-                      <div className="text-2xl font-bold">{value}{unit}</div>
+                      <div className="text-2xl font-bold" style={{ transition: 'transform 0.3s ease-in-out' }}>{value}{unit}</div>
                     </CardContent>
                   </motion.div>
                 </div>
