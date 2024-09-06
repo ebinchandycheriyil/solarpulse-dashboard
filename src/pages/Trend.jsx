@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CustHeader from "@/components/ui/header";
+import { Header } from "./Index";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {

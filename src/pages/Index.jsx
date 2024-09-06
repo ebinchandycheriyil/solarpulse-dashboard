@@ -3,7 +3,7 @@ import { motion, LayoutGroup } from "framer-motion";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Battery, Zap, Activity, Gauge } from "lucide-react";
 import MetricCard from "../components/MetricCard";
-import CustHeader from "@/components/ui/header";
+import { Header } from "./Header";
 
 const mockData = [
   {
@@ -55,6 +55,16 @@ const mockData = [
     batteryPercentage: 85,
   },
 ];
+
+const useExpandedState = (initialState) => {
+  const [expandedIndex, setExpandedIndex] = useState(initialState);
+
+  const toggleExpanded = (index) => {
+    setExpandedIndex((prevIndex) => (prevIndex === index ? -1 : index));
+  };
+
+  return [expandedIndex, toggleExpanded];
+};
 
 const Index = ({ theme, toggleTheme }) => {
   const [metrics, setMetrics] = useState([

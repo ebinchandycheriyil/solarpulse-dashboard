@@ -1,49 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData, index }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData, index, isExpanded, onToggle, layout }) => {
   return (
     <motion.div
       layout
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : 'col-span-1'}`}
+      transition={{ duration: 1, ease: "easeInOut" }}
+      className={`bg-card text-card-foreground rounded-lg overflow-hidden`}
       style={{
-        width: isOpen ? '100%' : 'auto',
-        transition: 'width 0.3s ease-in-out',
-        gridRow: isOpen ? 'span 2' : 'auto',
+        gridColumn: isExpanded ? '1 / -1' : 'auto',
+        gridRow: isExpanded ? 'span 2' : 'auto',
       }}
     >
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Collapsible open={isExpanded} onOpenChange={onToggle}>
         <CollapsibleTrigger className="w-full">
           <Card className="bg-transparent border-none relative">
             <div className="h-24 relative">
               <motion.div
                 layout
+                transition={{ duration: 1 }}
                 className="absolute inset-0 flex flex-col justify-between p-4"
-                style={{ transition: 'all 0.3s ease-in-out' }}
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                   <div className="flex items-center">
                     <motion.div
                       className="mr-2"
                       initial={false}
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 1 }}
                     >
                       <ChevronDown className="h-4 w-4" />
                     </motion.div>
                     <CardTitle className="text-sm font-medium">{title}</CardTitle>
                   </div>
-                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <motion.div layout="position" transition={{ duration: 1 }}>
+                    <Icon className="h-4 w-4 text-muted-foreground" />
+                  </motion.div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-2xl font-bold">{value}{unit}</div>
+                  <motion.div
+                    layout="position"
+                    transition={{ duration: 1 }}
+                    className="text-2xl font-bold"
+                    style={{ fontSize: '1.5rem', lineHeight: '2rem' }}
+                  >
+                    {value}{unit}
+                  </motion.div>
                 </CardContent>
               </motion.div>
             </div>
@@ -54,7 +60,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 1 }}
             className="overflow-hidden"
           >
             <div className="p-4 bg-card">
