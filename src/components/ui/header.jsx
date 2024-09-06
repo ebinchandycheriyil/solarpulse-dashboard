@@ -35,7 +35,7 @@ import { Link } from "react-router-dom";
 import { Switch } from "@/components/ui/switch";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-export const Header = ({ theme, toggleTheme }) => (
+const CustHeader = ({ theme, toggleTheme }) => (
   <header className="bg-background text-foreground p-4 sticky top-0 z-10 shadow-md">
     <div className="flex justify-between items-center mb-4">
       <Sheet>
@@ -93,3 +93,5 @@ export const Header = ({ theme, toggleTheme }) => (
     </div>
   </header>
 );
+
+export default CustHeader;

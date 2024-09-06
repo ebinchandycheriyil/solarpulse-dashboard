@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
-import { FileText } from 'lucide-react';
-import jsPDF from 'jspdf';
-import { Header } from './Index';
+import { FileText } from "lucide-react";
+import jsPDF from "jspdf";
+import CustHeader from "@/components/ui/header";
 
 const Reports = ({ theme, toggleTheme }) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -19,62 +19,70 @@ const Reports = ({ theme, toggleTheme }) => {
   });
 
   const handleCheckboxChange = (value) => {
-    setSelectedValues(prev => ({ ...prev, [value]: !prev[value] }));
+    setSelectedValues((prev) => ({ ...prev, [value]: !prev[value] }));
   };
 
   const handleGenerateReport = () => {
     const doc = new jsPDF();
-    
+
     // Add title
     doc.setFontSize(18);
-    doc.text('Solar Power System Report', 20, 20);
-    
+    doc.text("Solar Power System Report", 20, 20);
+
     // Add date range
     doc.setFontSize(12);
-    doc.text(`Date Range: ${startDate.toDateString()} - ${endDate.toDateString()}`, 20, 30);
-    
+    doc.text(
+      `Date Range: ${startDate.toDateString()} - ${endDate.toDateString()}`,
+      20,
+      30
+    );
+
     // Add selected values
     doc.setFontSize(14);
-    doc.text('Selected Values:', 20, 40);
+    doc.text("Selected Values:", 20, 40);
     let yPosition = 50;
     Object.entries(selectedValues).forEach(([key, value]) => {
       if (value) {
-        doc.text(`- ${key.charAt(0).toUpperCase() + key.slice(1)}`, 30, yPosition);
+        doc.text(
+          `- ${key.charAt(0).toUpperCase() + key.slice(1)}`,
+          30,
+          yPosition
+        );
         yPosition += 10;
       }
     });
-    
+
     // Add sample data (you would replace this with actual data in a real application)
     doc.setFontSize(14);
-    doc.text('Sample Data:', 20, yPosition + 10);
+    doc.text("Sample Data:", 20, yPosition + 10);
     yPosition += 20;
     if (selectedValues.voltage) {
-      doc.text('Voltage: 12.5V', 30, yPosition);
+      doc.text("Voltage: 12.5V", 30, yPosition);
       yPosition += 10;
     }
     if (selectedValues.current) {
-      doc.text('Current: 5.2A', 30, yPosition);
+      doc.text("Current: 5.2A", 30, yPosition);
       yPosition += 10;
     }
     if (selectedValues.power) {
-      doc.text('Power: 65W', 30, yPosition);
+      doc.text("Power: 65W", 30, yPosition);
       yPosition += 10;
     }
     if (selectedValues.boardPower) {
-      doc.text('Board Power: 45W', 30, yPosition);
+      doc.text("Board Power: 45W", 30, yPosition);
       yPosition += 10;
     }
     if (selectedValues.batteryPercentage) {
-      doc.text('Battery Percentage: 85%', 30, yPosition);
+      doc.text("Battery Percentage: 85%", 30, yPosition);
     }
-    
+
     // Save the PDF
-    doc.save('solar_power_report.pdf');
+    doc.save("solar_power_report.pdf");
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header theme={theme} toggleTheme={toggleTheme} />
+      <CustHeader theme={theme} toggleTheme={toggleTheme} />
       <div className="p-4 sm:p-8">
         <h1 className="text-3xl font-bold mb-8">Generate Report</h1>
         <Card className="bg-card text-card-foreground">
@@ -93,7 +101,9 @@ const Reports = ({ theme, toggleTheme }) => {
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-2">Select Values to Include</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                Select Values to Include
+              </h3>
               <div className="space-y-2">
                 {Object.entries(selectedValues).map(([key, value]) => (
                   <div key={key} className="flex items-center">
@@ -102,7 +112,9 @@ const Reports = ({ theme, toggleTheme }) => {
                       checked={value}
                       onCheckedChange={() => handleCheckboxChange(key)}
                     />
-                    <label htmlFor={key} className="ml-2 capitalize">{key}</label>
+                    <label htmlFor={key} className="ml-2 capitalize">
+                      {key}
+                    </label>
                   </div>
                 ))}
               </div>
