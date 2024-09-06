@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
 import { FileText } from 'lucide-react';
 import jsPDF from 'jspdf';
-import { Header } from './Index';
+import Header from '../components/Header';
 
 const Reports = ({ theme, toggleTheme }) => {
   const [startDate, setStartDate] = useState(new Date());

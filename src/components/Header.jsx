@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 
-export const Header = ({ theme, toggleTheme }) => {
+const Header = ({ theme, toggleTheme }) => {
   const navigate = useNavigate();
 
   return (
@@ -19,3 +19,5 @@ export const Header = ({ theme, toggleTheme }) => {
     </header>
   );
 };
+
+export default Header;
