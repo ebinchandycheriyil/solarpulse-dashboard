@@ -3,7 +3,7 @@ import { motion, LayoutGroup } from 'framer-motion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Battery, Zap, Activity, Gauge } from 'lucide-react';
 import MetricCard from '../components/MetricCard';
-import { Header } from './Header';
+import { Header } from '../components/Header';
 
 const mockData = [
   { time: '00:00', voltage: 12, current: 5, power: 60, boardPower: 40, batteryPercentage: 80 },
