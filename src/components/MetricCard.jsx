@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -21,9 +21,10 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
           <Card className="bg-transparent border-none relative">
             <div className="h-24 relative">
               <motion.div
-                layout
-                transition={{ duration: 1 }}
                 className="absolute inset-0 flex flex-col justify-between p-4"
+                initial={false}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
                   <div className="flex items-center">
@@ -37,12 +38,12 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
                     </motion.div>
                     <CardTitle className="text-sm font-medium">{title}</CardTitle>
                   </div>
-                  <motion.div layout="position" transition={{ duration: 1 }}>
+                  <motion.div initial={false} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
                     <Icon className="h-4 w-4 text-muted-foreground" />
                   </motion.div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <motion.div layout="position" transition={{ duration: 1 }} className="text-2xl font-bold">
+                  <motion.div initial={false} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="text-2xl font-bold">
                     {value}{unit}
                   </motion.div>
                 </CardContent>
@@ -51,25 +52,29 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
           </Card>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="overflow-hidden"
-          >
-            <div className="p-4 bg-card">
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={mockData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                  <XAxis dataKey="time" stroke="#888" />
-                  <YAxis stroke="#888" />
-                  <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
-                  <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </motion.div>
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 1 }}
+                className="overflow-hidden"
+              >
+                <div className="p-4 bg-card">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <LineChart data={mockData}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                      <XAxis dataKey="time" stroke="#888" />
+                      <YAxis stroke="#888" />
+                      <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                      <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={2} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </CollapsibleContent>
       </Collapsible>
     </motion.div>
