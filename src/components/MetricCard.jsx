@@ -12,11 +12,11 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
     <motion.div
       layout
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-full' : 'col-span-1'}`}
+      className={`bg-card text-card-foreground rounded-lg overflow-hidden ${isOpen ? 'col-span-4' : 'col-span-1'}`}
       style={{
-        width: isOpen ? '100%' : 'auto',
-        transition: 'width 0.3s ease-in-out',
+        gridColumn: isOpen ? 'span 4' : `span 1`,
         gridRow: isOpen ? 'span 2' : 'auto',
+        transition: 'all 0.3s ease-in-out',
       }}
     >
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
