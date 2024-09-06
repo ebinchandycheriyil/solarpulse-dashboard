@@ -22,6 +22,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
             <div className="h-24 relative">
               <motion.div
                 layout
+                transition={{ duration: 1 }}
                 className="absolute inset-0 flex flex-col justify-between p-4"
               >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0">
@@ -36,12 +37,12 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
                     </motion.div>
                     <CardTitle className="text-sm font-medium">{title}</CardTitle>
                   </div>
-                  <motion.div layout="position">
+                  <motion.div layout="position" transition={{ duration: 1 }}>
                     <Icon className="h-4 w-4 text-muted-foreground" />
                   </motion.div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <motion.div layout="position" className="text-2xl font-bold">
+                  <motion.div layout="position" transition={{ duration: 1 }} className="text-2xl font-bold">
                     {value}{unit}
                   </motion.div>
                 </CardContent>
