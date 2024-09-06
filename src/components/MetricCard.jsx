@@ -42,7 +42,12 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
                   </motion.div>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <motion.div layout="position" transition={{ duration: 1 }} className="text-2xl font-bold">
+                  <motion.div
+                    layout="position"
+                    transition={{ duration: 1 }}
+                    className="text-2xl font-bold"
+                    style={{ fontSize: '1.5rem', lineHeight: '2rem' }}
+                  >
                     {value}{unit}
                   </motion.div>
                 </CardContent>
