@@ -5,11 +5,11 @@ import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData, index, isExpanded, onToggle, layout }) => {
+const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData, index, isExpanded, onToggle, animationDuration }) => {
   return (
     <motion.div
       layout
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: animationDuration, ease: "easeInOut" }}
       className={`bg-card text-card-foreground rounded-lg overflow-hidden`}
       style={{
         gridColumn: isExpanded ? '1 / -1' : 'auto',
@@ -30,7 +30,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
                       className="mr-2"
                       initial={false}
                       animate={{ rotate: isExpanded ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: animationDuration }}
                     >
                       <ChevronDown className="h-4 w-4" />
                     </motion.div>
@@ -50,7 +50,7 @@ const MetricCard = ({ title, value, unit, icon: Icon, dataKey, stroke, mockData,
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: animationDuration }}
             className="overflow-hidden"
           >
             <div className="p-4 bg-card">
